@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
+    "appSecret": "b3f4bbc877811aa9ef13789d0f552697",
     "pageAccessToken": "EAAD0UYuDwhIBANMqGuCGuWZAckLuSNTsIZAo8ag7RMBnYZAUzvZAZApVeW3ZC9ZBMsZCaf9d5QYZCGj9KWZCRPbXWxj1ZBPUHTFG3jhZAUmZCcjcfFnTt3Qk93yQjgjNJl3M4KzQYFkwKFKyuaL3JzWEtiyweSzSTPivlViSV23fPX1Fz7AZDZD",
     "validationToken": "The-Bot-Designers-Token",
-    "serverURL": ""
+    "serverURL": "https://thebotdesigners.herokuapp.com/"
 }
