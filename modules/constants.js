@@ -1,5 +1,5 @@
 module.exports = {
-  "PAGE_ACCESS_TOKEN" : "EAACw1l6qxqsBAGeC6EDH1OgtpHUp88m9d32UchpmUI5ICXxGTSOetFIdOkAwT5IV8zo9tKKp3WeR19MD8nnJYaMnZBZBBrk0jAaVsGnwHKO1D3D49q0AP2pRyfDtdis5iqTzMFQViot5vTgq1KWZA5OHHCjZC9qlCqivoLepWgZDZD",
+  "PAGE_ACCESS_TOKEN" : "EAACw1l6qxqsBAO6VDAW0tgR08aS9DpsMTofyzOjW0IFGBFkY4F5aRqPMqPJMiimXME53phNutLJVUpruoWDQw8x7qigo8EZBZCF20szT1tJ3sYiXp5yzySPW24PERaxHFfw3HaXeHcl46iyDCmbyPjic5gqNZALdirgGWy2QAZDZD",
   "FB_MESSAGES_URL" : "https://graph.facebook.com/v2.6/me/messages",
   "FB_THREAD_SETTINGS_URL" : "https://graph.facebook.com/v2.6/me/thread_settings",
   "FB_USER_INFO_URL" : "https://graph.facebook.com/v2.6/",
