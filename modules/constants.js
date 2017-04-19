@@ -1,5 +1,5 @@
 module.exports = {
-  "PAGE_ACCESS_TOKEN" : "EAAZAx0kQJ3FMBAGieDYM6EPE0WzJFYq5JkejlmHDmmZAwkncR7yb146GpQbwvhGbZC3J17wclYqZCS6eos2Nqgp93RmQWtKYHSFbETeJD1ObY84T3xv3LZBD984aBtzGkb0JdIrFoe5UmFkqQDZA7iReT6swngGDOkqttjuZByrRQZDZD",
+  "PAGE_ACCESS_TOKEN" : "EAACw1l6qxqsBAGeC6EDH1OgtpHUp88m9d32UchpmUI5ICXxGTSOetFIdOkAwT5IV8zo9tKKp3WeR19MD8nnJYaMnZBZBBrk0jAaVsGnwHKO1D3D49q0AP2pRyfDtdis5iqTzMFQViot5vTgq1KWZA5OHHCjZC9qlCqivoLepWgZDZD",
   "FB_MESSAGES_URL" : "https://graph.facebook.com/v2.6/me/messages",
   "FB_THREAD_SETTINGS_URL" : "https://graph.facebook.com/v2.6/me/thread_settings",
   "FB_USER_INFO_URL" : "https://graph.facebook.com/v2.6/",
@@ -9,7 +9,7 @@ module.exports = {
   
   "BOT_CANT_UNDERSTAND" : "Hmmm... I've never heard that before!",
   
-  "HEROKU_HOSTNAME" : "aqueous-woodland-80112.herokuapp.com",
+  "HEROKU_HOSTNAME" : "thebotdesigners.herokuapp.com",
   "LOGIN_PAGE_URL" : "/login",
   
   "WCS_HOSTNAME" : "209.166.166.221",

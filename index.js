@@ -5,7 +5,6 @@ var constants = require('./modules/constants');
 var fbMessenger = require('./modules/fbMessenger');
 var app = express();
 
-app.use(express.static('WebContent'));
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
