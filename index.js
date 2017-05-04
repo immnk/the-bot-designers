@@ -28,22 +28,42 @@ app.get('/webhook/', function(req, res) {
 });
 
 app.post('/webhook/', function(req, res) {
-    messaging_events = req.body.entry[0].messaging
-    console.log("messaging_events.length = " + messaging_events.length);
-    for (i = 0; i < messaging_events.length; i++) {
-        if (event.message && event.message.text) {
-            text = event.message.text;
-            if (text === 'Generic') {
-                fbMessenger.sendGenericMessage(sender)
-                continue
-            } else if ((text.toLowerCase().indexOf('hi') == 0) || (text.toLowerCase().indexOf('hello') > -1)) {
-                console.log("Greeting ENTER");
-                fbMessenger.sendTextMessage(sender, "Hi! How Can I help you?");
-                continue;
-            }
-        }
+    var data = req.body;
+
+    // Make sure this is a page subscription
+    if (data.object == 'page') {
+        // Iterate over each entry
+        // There may be multiple if batched
+        data.entry.forEach(function(pageEntry) {
+            var pageID = pageEntry.id;
+            var timeOfEvent = pageEntry.time;
+
+            // Iterate over each messaging event
+            pageEntry.messaging.forEach(function(messagingEvent) {
+                if (messagingEvent.optin) {
+                    receivedAuthentication(messagingEvent);
+                } else if (messagingEvent.message) {
+                    receivedMessage(messagingEvent);
+                } else if (messagingEvent.delivery) {
+                    receivedDeliveryConfirmation(messagingEvent);
+                } else if (messagingEvent.postback) {
+                    receivedPostback(messagingEvent);
+                } else if (messagingEvent.read) {
+                    receivedMessageRead(messagingEvent);
+                } else if (messagingEvent.account_linking) {
+                    receivedAccountLink(messagingEvent);
+                } else {
+                    console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                }
+            });
+        });
+
+        // Assume all went well.
+        //
+        // You must send back a 200, within 20 seconds, to let us know you've 
+        // successfully received the callback. Otherwise, the request will time out.
+        res.sendStatus(200);
     }
-    res.sendStatus(200)
 })
 
 // Spin up the server
