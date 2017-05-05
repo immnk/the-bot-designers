@@ -281,7 +281,7 @@ function sendHelpMessage(senderID) {
 
 function sendPlayMessage(senderID) {
     var ques = game.getRandomGame();
-    var quickReply = game.getRandomGame.options;
+    var quickReply = ques.options;
     var title = ques.question;
     sendQuickReply(senderID, quickReply, title);
 }
