@@ -74,9 +74,25 @@ module.exports = {
         } else if (quickReply) {
             var quickReplyPayload = quickReply.payload;
             if (quickReplyPayload.indexOf("GAME_RIGHT") != -1) {
-                sendTextMessage(senderID, "Right answer");
+                sendTextMessage(senderID, constants.KANNA_MESSAGES.RIGHT_ANSWER);
+                sendPlayMessage(senderID);
             } else if (quickReplyPayload.indexOf("GAME_WRONG") != -1) {
-                sendTextMessage(senderID, "Wrong answer");
+                sendTextMessage(senderID, constants.KANNA_MESSAGES.WRONG_ANSWER);
+                sendPlayMessage(senderID);
+            } else if (quickReplyPayload.indexOf("MAIN_SERVICE_") != -1) {
+                switch (quickReplyPayload) {
+                    case constants.RECOMMEND_PAYLOAD:
+                        sendTextMessage(senderID, "Fetching you the list of recommendations.");
+                        break;
+                    case constants.LOG_PAYLOAD:
+                        sendTextMessage(senderID, "Please brief your concern for us to address it promptly.");
+                        break;
+                    case constants.PLAY_PAYLOAD:
+                        sendPlayMessage(senderID);
+                        break;
+                    default:
+                        sendTextMessage(senderID, constants.KANNA_MESSAGES.CANT_UNDERSTAND);
+                }
             } else {
                 console.log("Quick reply for message %s with payload %s",
                     messageId, quickReplyPayload);
@@ -206,12 +222,6 @@ module.exports = {
 
         if (payload == 'GET_STARTED_PAYLOAD') {
             sendHelpMessage(senderID);
-        } else if (payload == constants.RECOMMEND_PAYLOAD) {
-            sendTextMessage(senderID, "Please wait while we fetch recommendation list for you.");
-        } else if (payload == constants.LOG_PAYLOAD) {
-            sendTextMessage(senderID, "Please brief your experience.");
-        } else if (payload == constants.PLAY_PAYLOAD) {
-            sendTextMessage(senderID, "Okay, Lets start a fun game.");
         } else {
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
@@ -259,6 +269,7 @@ module.exports = {
 }
 
 function sendHelpMessage(senderID) {
+    console.log('sendHelpMessage method called');
     var quickReply = [{
             "content_type": "text",
             "title": "Recommend Movies",
