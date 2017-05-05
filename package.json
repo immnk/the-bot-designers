@@ -2,10 +2,10 @@
   "name": "siriusecom",
   "version": "0.0.1",
   "description": "sirius ecommerce bot",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "make test",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
