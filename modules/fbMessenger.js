@@ -75,7 +75,7 @@ module.exports = {
             var quickReplyPayload = quickReply.payload;
             if (quickReplyPayload.indexOf("GAME_RIGHT") != -1) {
                 sendTextMessage(senderID, "Right answer");
-            } else if () {
+            } else if (quickReplyPayload.indexOf("GAME_WRONG") != -1) {
                 sendTextMessage(senderID, "Wrong answer");
             } else {
                 console.log("Quick reply for message %s with payload %s",
