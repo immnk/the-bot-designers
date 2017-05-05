@@ -1,5 +1,6 @@
 var constants = require('./constants');
 var request = require('request');
+var game = require('./game');
 
 module.exports = {
     /*
@@ -79,14 +80,17 @@ module.exports = {
             return;
         }
 
-        if (messageText.toUpperCase()) {
+        if (messageText) {
 
             // If we receive a text message, check to see if it matches any special
             // keywords and send back the corresponding example. Otherwise, just echo
             // the text we received.
-            switch (messageText) {
+            switch (messageText.toUpperCase()) {
                 case constants.COMMANDS.HELP_COMMAND:
                     sendHelpMessage(senderID);
+                    break;
+                case constants.COMMANDS.PLAY_COMMAND:
+                    sendPlayMessage(senderID);
                     break;
                 case 'image':
                     sendImageMessage(senderID);
@@ -265,7 +269,15 @@ function sendHelpMessage(senderID) {
             "payload": constants.PLAY_PAYLOAD
         }
     ];
-    sendQuickReply(senderID, quickReply);
+    var title = "What service do you want?";
+    sendQuickReply(senderID, quickReply, title);
+}
+
+function sendPlayMessage(senderID) {
+    var ques = game.getRandomGame();
+    var quickReply = game.getRandomGame.options;
+    var title = ques.question;
+    sendQuickReply(senderID, quickReply, title);
 }
 
 /*
@@ -553,7 +565,7 @@ function sendReceiptMessage(recipientId) {
  * Send a message with Quick Reply buttons.
  *
  */
-function sendQuickReply(recipientId, quickReply) {
+function sendQuickReply(recipientId, quickReply, text) {
     if (!quickReply) {
         quickReply = [{
                 "content_type": "text",
@@ -571,13 +583,14 @@ function sendQuickReply(recipientId, quickReply) {
                 "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
             }
         ];
+        text = "What's your favorite movie genre?";
     }
     var messageData = {
         recipient: {
             id: recipientId
         },
         message: {
-            text: "What's your favorite movie genre?",
+            text: text,
             quick_replies: quickReply
         }
     };
