@@ -47,8 +47,8 @@ module.exports = {
     }],
     getRandomGame: function() {
         var min = 0,
-            max = questions.length - 1;
+            max = this.questions.length - 1;
         var random = Math.floor(Math.random() * (max - min)) + min;
-        return questions[random];
+        return this.questions[random];
     }
 }
