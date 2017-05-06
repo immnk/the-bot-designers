@@ -7,7 +7,7 @@ module.exports = {
     },
     "UBER_TOKEN": "EBIKEUsQ2n2twoIhq9VTNBZtqmmkc_cfBsGT-IPx",
     "UBER_AUTH_REDIRECT": "http://thebotdesigners.herokuapp.com/uber/bookUber",
-    "UBER": "https://login.uber.com/oauth/v2/authorize?client_id=NOAdsESZIE2CPWaL4Fg0d71uNVjFzcLU&response_type=code",
+    "UBER": "https://login.uber.com/oauth/v2/authorize?client_id=NOAdsESZIE2CPWaL4Fg0d71uNVjFzcLU&response_type=code&scope=request",
     "WIT_AI_ENDPOINT": "https://api.wit.ai/message?v=20160829&q=",
     "WIT_AI_SERVER_TOKEN": "Bearer BFYEQAC2CHDMSNJY6WI7G7OOA5BLPMD4",
     "SERVER_URL": "https://thebotdesigners.herokuapp.com",

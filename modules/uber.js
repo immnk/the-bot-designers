@@ -17,7 +17,8 @@ module.exports = {
 
             })
             .end(function(response) {
-                getFareEstimate(req, response)
+                getFareEstimate(req, response);
+                res.sendStatus(200);
             });
     }
 }
