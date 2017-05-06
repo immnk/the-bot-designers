@@ -408,7 +408,7 @@ function sendShowTimings(senderID, theatreID, movieName) {
         showTimings.forEach((show) => {
             var showButton = {
                 type: "postback",
-                title: show.name,
+                title: show.timing,
                 payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
             }
             allButtons.push(showButton);
