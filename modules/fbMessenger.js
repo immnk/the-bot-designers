@@ -245,7 +245,7 @@ module.exports = {
             sendTextMessage(senderID, payload);
         } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
             // Selected a movie. Now just fetch out locations.
-            sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD));
+            sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD, ""));
         } else {
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
