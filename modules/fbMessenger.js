@@ -246,7 +246,8 @@ module.exports = {
             console.log(payload);
             var showID = payload.substring(payload.indexOf("#") + 1, payload.indexOf('$'));
             var theatreID = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
-            var movieName = str.substring(payload.indexOf('_') + 1);
+            var movieName = payload.substring(payload.indexOf('_') + 1);
+            sendTextMessage(senderID, "Shall I go ahead and book the ticket for show @ " + showID + " at theatre " + theatreID + " for movie " + movieName);
         } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
             var theatreID = payload.substring(payload.indexOf("$") + 1, payload.indexOf("#"));
             var movieName = payload.substring(payload.indexOf('_') + 1);
