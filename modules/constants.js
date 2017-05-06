@@ -29,7 +29,8 @@ module.exports = {
         "ISSUE_COMMAND": "issue",
         "HUNGRY_COMMAND": "hungry",
         "POPCORN_COMMAND": "popcorn",
-        "PROBLEM_COMMAND": "problem"
+        "PROBLEM_COMMAND": "problem",
+        "MAHADAD_COMMAND": "mahdad"
     },
     "KANNA_MESSAGES": {
         "ERROR": "Kanna, an error ran into me because I don't",

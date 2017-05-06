@@ -164,7 +164,8 @@ module.exports = {
         } else if (messageText.toLowerCase().indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.HUNGRY_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.POPCORN_COMMAND) != -1 ||
-            messageText.toLowerCase().indexOf(constants.COMMANDS.PROBLEM_COMMAND) != -1) {
+            messageText.toLowerCase().indexOf(constants.COMMANDS.PROBLEM_COMMAND) != -1 || 
+            messageText.toLowerCase().indexOf(constants.COMMANDS.MAHADAD_COMMAND) != -1) {
 
             // Create FD ticket
             var params = {
