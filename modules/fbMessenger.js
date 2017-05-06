@@ -242,7 +242,7 @@ module.exports = {
         if (payload == 'GET_STARTED_PAYLOAD') {
             sendHelpMessage(senderID);
         } else if (payload.indexOf(constants.SELECT_SHOW_PAYLOAD) != -1) {
-            sendTextMessage(senderID, payload);
+            // sendTextMessage(senderID, payload);
             console.log(payload);
             var showID = payload.substring(payload.indexOf("#") + 1, payload.indexOf('$'));
             var theatreID = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
