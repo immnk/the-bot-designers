@@ -53,7 +53,7 @@ app.get('/booking', function(req, res) {
 
 app.get('/movie', function(req, res) {
     var title = req.query.title;
-    res.sendFile(constants.HTML_DIR + 'movie.html?title=' + title, { root: __dirname });
+    res.sendFile(constants.HTML_DIR + 'movie.html', { root: __dirname });
 });
 
 app.get('/getCab', function(req, res) {
@@ -138,7 +138,7 @@ var myJob = new cronJob('5 * * * * *', function() {
                 var params = {
                     "id": tickets[k].ticketId
                 };
-                request({ url: constants.LOCAL_URL + "/freshdesk/getTicketStatus", qs: params }, function(err, response, body) {
+                request({ url: constants.SERVER_URL + "/freshdesk/getTicketStatus", qs: params }, function(err, response, body) {
                     if (err) { console.log("err" + err); return; }
                     console.log(body);
                     if (body == 'Resolved' || body == 'Closed') {
