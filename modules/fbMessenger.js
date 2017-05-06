@@ -172,7 +172,8 @@ module.exports = {
             request({ url: constants.SERVER_URL + "/freshdesk/createTicket", qs: params }, function(err, response, body) {
                 if (err) { console.log(err); return; }
                 // console.log("Get response: " + response.statusCode);
-                sendTextMessage(senderID, "Ticket created. " + response.statusCode);
+                var message = body ? body : "Ticket created for your request.";
+                sendTextMessage(senderID, message);
             });
         } else if (messageText) {
 
