@@ -148,7 +148,7 @@ module.exports = {
             return;
         }
 
-        if (typeof(messageText) == string) {
+        if (typeof(messageText) == "string") {
             messageText = messageText.toUpperCase();
         } else {
             sendTextMessage(senderID, constants.KANNA_MESSAGES.UNKNOWN);
