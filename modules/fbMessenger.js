@@ -347,7 +347,7 @@ function sendMovies(senderID) {
             var element = {
                 title: movie.Title,
                 subtitle: movie.Plot,
-                item_url: constants.SERVER_URL,
+                item_url: constants.SERVER_URL + "/movie?movie=" + movie.Title,
                 image_url: movie.Poster,
                 buttons: [{
                     type: "postback",
@@ -448,7 +448,7 @@ function sendBookingConfirmation(senderID, showID, timing, movieName) {
             sendTextMessage(senderID, constants.KANNA_MESSAGES.SHOW_BOOKED);
             var buttons = [{
                 type: "web_url",
-                url: constants.SERVER_URL + "/booking",
+                url: constants.SERVER_URL + "/booking?senderID=" + senderID + "&showID=" + showID,
                 title: "Show ticket"
             }, {
                 type: "postback",
