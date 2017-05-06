@@ -247,10 +247,10 @@ module.exports = {
             var showID = payload.substring(payload.indexOf("#") + 1, payload.indexOf('$'));
             var theatreID = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
             var movieName = str.substring(payload.indexOf('_') + 1);
-
         } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
             var theatreID = payload.substring(payload.indexOf("$") + 1, payload.indexOf("#"));
-            var movieName = str.substring(payload.indexOf('_') + 1);
+            var movieName = payload.substring(payload.indexOf('_') + 1);
+            console.log('Theatre ID' + theatreID + " Moviename: " + movieName);
             sendTextMessage(senderID, "Requested for  ticket at " + theatreID + " for movie: " + movieName);
             sendShowTimings(senderID, theatreID, movieName);
         } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
