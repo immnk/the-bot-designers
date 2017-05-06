@@ -402,6 +402,8 @@ function sendShowTimings(senderID, theatreID, movieName) {
         }
         sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
         var showTimings = JSON.parse(response.body);
+        console.log('show timings');
+        console.log(showTimings);
         var allButtons = [];
         showTimings.forEach((show) => {
             var showButton = {
@@ -411,7 +413,12 @@ function sendShowTimings(senderID, theatreID, movieName) {
             }
             allButtons.push(showButton);
         });
-        sendButtonMessage(senderID, "Select show time", allButtons);
+        if (allButtons.length > 0) {
+            console.log(allButtons);
+            sendButtonMessage(senderID, "Select show time", allButtons);
+        } else {
+            sendTextMessage(senderID, "Couldnt fetch all shows available");
+        }
 
     });
 }
