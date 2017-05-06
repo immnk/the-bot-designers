@@ -241,8 +241,18 @@ module.exports = {
 
         if (payload == 'GET_STARTED_PAYLOAD') {
             sendHelpMessage(senderID);
-        } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
+        } else if (payload.indexOf(constants.SELECT_SHOW_PAYLOAD) != -1) {
             sendTextMessage(senderID, payload);
+            console.log(payload);
+            var showID = payload.substring(payload.indexOf("#") + 1, payload.indexOf('$'));
+            var theatreID = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
+            var movieName = str.substring(payload.indexOf('_') + 1);
+
+        } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
+            var theatreID = payload.substring(payload.indexOf("$") + 1, payload.indexOf("#"));
+            var movieName = str.substring(payload.indexOf('_') + 1);
+            sendTextMessage(senderID, "Requested for  ticket at " + theatreID + " for movie: " + movieName);
+            sendShowTimings(senderID, theatreID, movieName);
         } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
             // Selected a movie. Now just fetch out locations.
             sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD, ""));
@@ -370,7 +380,7 @@ function sendLocations(senderID, movieName) {
                         var theatreButton = {
                             type: "postback",
                             title: theatre.name,
-                            payload: constants.SELECT_THEATRE_PAYLOAD + theatre._id + constants.SELECT_MOVIE_PAYLOAD + movieTitle
+                            payload: constants.SELECT_THEATRE_PAYLOAD + theatre._id + '#' + constants.SELECT_MOVIE_PAYLOAD + movieTitle
                         }
                         allButtons.push(theatreButton);
                     });
@@ -378,6 +388,31 @@ function sendLocations(senderID, movieName) {
                 }
             }
         }
+    });
+}
+
+function sendShowTimings(senderID, theatreID, movieName) {
+    console.log('Send show timing');
+    var url = constants.SERVER_URL + '/movies/getShowsByMovieTheatre';
+    var params = { title: movieName, theatre_id: theatreID }
+    request({ url: url, qs: params }, function(error, response, body) {
+        if (error) {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
+            return;
+        }
+        sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
+        var showTimings = JSON.parse(response.body);
+        var allButtons = [];
+        showTimings.forEach((show) => {
+            var showButton = {
+                type: "postback",
+                title: show.name,
+                payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
+            }
+            allButtons.push(showButton);
+        });
+        sendButtonMessage(senderID, "Select show time", allButtons);
+
     });
 }
 
