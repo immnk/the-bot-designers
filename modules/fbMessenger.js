@@ -348,6 +348,8 @@ function sendMovies(senderID) {
 }
 
 function sendLocations(senderID, movieName) {
+    console.log('sendLocation method start');
+    console.log(movieName);
     var url = constants.SERVER_URL + '/movies/getMoviesLocationsByTitle';
     var params = { title: movieName }
     request({ url: url, qs: params }, function(error, response, body) {
@@ -355,6 +357,7 @@ function sendLocations(senderID, movieName) {
             sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
             return;
         }
+        sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
         var theatresByLocations = JSON.parse(response.body);
         var movieTitle = theatresByLocations.title;
         for (var location in theatresByLocations) {
@@ -363,15 +366,13 @@ function sendLocations(senderID, movieName) {
                 if (location != 'title') {
                     var theatres = theatresByLocations[location];
                     var allButtons = [];
-                    console.log(location);
-                    console.log('\n');
-                    console.log('\n');
                     theatres.forEach((theatre) => {
                         var theatreButton = {
                             type: "postback",
                             title: theatre.name,
                             payload: constants.SELECT_THEATRE_PAYLOAD + theatre._id + constants.SELECT_MOVIE_PAYLOAD + movieTitle
                         }
+                        allButtons.push(theatreButton);
                     });
                     sendButtonMessage(senderID, location, allButtons);
                 }
