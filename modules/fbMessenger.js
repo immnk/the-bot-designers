@@ -22,10 +22,6 @@ module.exports = {
     sendReviewButtons: function(senderID) {
         var buttons = [{
             type: "postback",
-            title: "Excellent",
-            payload: constants.REVIEW.EXCELLENT_PAYLOAD
-        }, {
-            type: "postback",
             title: "Good",
             payload: constants.REVIEW.GOOD_PAYLOAD
         }, {

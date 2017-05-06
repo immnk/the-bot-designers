@@ -51,11 +51,13 @@ app.get('/movie', function(req, res) {
 app.get('/getCab', function(req, res) {
     var senderID = req.query.sender;
     fbMessenger.sendCabBookButton(senderID);
+    res.sendStatus(200);
 });
 
 app.get('/askReview', function(req, res) {
     var senderID = req.query.sender;
     fbMessenger.sendReviewButtons(senderID);
+    res.sendStatus(200);
 });
 
 app.get('/webhook/', function(req, res) {
