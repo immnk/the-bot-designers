@@ -106,14 +106,23 @@ module.exports = {
             return;
         }
 
-        if (messageText.toUpperCase().indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
+        messageText = messageText.toUpperCase();
+        if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
             sendMovies(senderID);
+        } else if (messageText.indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1) {
+            // Create FD ticket
+            var params = { email: 'sapnasat@gmail.com', subject: 'test subject', description: 'test description' };
+            request({ url: constants.SERVER_URL + "/freshdesk/createTicket", qs: params }, function(err, response, body) {
+                if (err) { console.log(err); return; }
+                // console.log("Get response: " + response.statusCode);
+                sendTextMessage(senderID, "Ticket created. " + response.statusCode);
+            });
         } else if (messageText) {
 
             // If we receive a text message, check to see if it matches any special
             // keywords and send back the corresponding example. Otherwise, just echo
             // the text we received.
-            switch (messageText.toUpperCase()) {
+            switch (messageText) {
                 case constants.COMMANDS.HELP_COMMAND:
                     sendHelpMessage(senderID);
                     break;
@@ -227,6 +236,9 @@ module.exports = {
 
         if (payload == 'GET_STARTED_PAYLOAD') {
             sendHelpMessage(senderID);
+        } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
+            // Selected a movie. Now just fetch out locations.
+            sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD));
         } else {
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
@@ -327,6 +339,11 @@ function sendMovies(senderID) {
         sendGenericMessage(senderID, elements);
     });
 }
+
+function sendLocations(senderID, movieName) {
+
+}
+
 /*
  * Send an image using the Send API.
  *

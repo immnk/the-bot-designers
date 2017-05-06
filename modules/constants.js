@@ -14,7 +14,8 @@ module.exports = {
     "COMMANDS": {
         "HELP_COMMAND": "HELP",
         "PLAY_COMMAND": "PLAY",
-        "MOVIES_NEAR_ME": "MOVIES NEAR ME"
+        "MOVIES_NEAR_ME": "MOVIES NEAR ME",
+        "ISSUE_COMMAND": "ISSUE"
     },
     "KANNA_MESSAGES": {
         "ERROR": "Kanna, an error ran into me because I don't",
