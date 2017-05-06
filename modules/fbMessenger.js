@@ -320,7 +320,7 @@ function sendMovies(senderID) {
             }
             elements.push(element);
         });
-        sendGenericMessage(elements);
+        sendGenericMessage(senderID, elements);
     });
 }
 /*
