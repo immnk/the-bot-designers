@@ -114,8 +114,8 @@ module.exports = {
             var params = {
                 userId: senderID,
                 emailId: 'sapnasat@gmail.com',
-                subject: 'test subject',
-                description: 'test description'
+                subject: 'Issue created from Baasha Bot',
+                description: messageText
             }
             request({ url: constants.SERVER_URL + "/freshdesk/createTicket", qs: params }, function(err, response, body) {
                 if (err) { console.log(err); return; }
@@ -134,54 +134,54 @@ module.exports = {
                 case constants.COMMANDS.PLAY_COMMAND:
                     sendPlayMessage(senderID);
                     break;
-                case 'image':
+                case 'IMAGE':
                     sendImageMessage(senderID);
                     break;
-                case 'gif':
+                case 'GIF':
                     sendGifMessage(senderID);
                     break;
 
-                case 'audio':
+                case 'AUDIO':
                     sendAudioMessage(senderID);
                     break;
 
-                case 'video':
+                case 'VIDEO':
                     sendVideoMessage(senderID);
                     break;
 
-                case 'file':
+                case 'FILE':
                     sendFileMessage(senderID);
                     break;
 
-                case 'button':
+                case 'BUTTON':
                     sendButtonMessage(senderID);
                     break;
 
-                case 'generic':
+                case 'GENERIC':
                     sendGenericMessage(senderID);
                     break;
 
-                case 'receipt':
+                case 'RECEIPT':
                     sendReceiptMessage(senderID);
                     break;
 
-                case 'quick reply':
+                case 'QUICK REPLY':
                     sendQuickReply(senderID);
                     break;
 
-                case 'read receipt':
+                case 'READ RECEIPT':
                     sendReadReceipt(senderID);
                     break;
 
-                case 'typing on':
+                case 'TYPING ON':
                     sendTypingOn(senderID);
                     break;
 
-                case 'typing off':
+                case 'TYPING OFF':
                     sendTypingOff(senderID);
                     break;
 
-                case 'account linking':
+                case 'ACCOUNT LINKING':
                     sendAccountLinking(senderID);
                     break;
 
@@ -310,18 +310,18 @@ function sendHelpMessage(senderID) {
     console.log('sendHelpMessage method called');
     var quickReply = [{
             "content_type": "text",
-            "title": "Recommend Movies",
+            "title": "Movies",
             "payload": constants.RECOMMEND_PAYLOAD
-        },
-        {
-            "content_type": "text",
-            "title": "Log Complaint",
-            "payload": constants.LOG_PAYLOAD
         },
         {
             "content_type": "text",
             "title": "Play",
             "payload": constants.PLAY_PAYLOAD
+        },
+        {
+            "content_type": "text",
+            "title": "Contact",
+            "payload": constants.LOG_PAYLOAD
         }
     ];
     var title = "I'm Baasha.. Maaanik Baasha!! Kanna how can I help you? ";
