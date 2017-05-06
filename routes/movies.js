@@ -142,7 +142,8 @@ module.exports = function() {
         Shows.find({ "_id": req.body.shows_id }, function(err, shows) {
             if (err) {
                 //next(err);
-                console.error(error);
+                console.error(err);
+                return;
             }
             if (shows.length > 0) {
                 res.time = shows[0].time;
