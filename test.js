@@ -3,8 +3,12 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var constants = require('./modules/constants');
 var fbMessenger = require('./modules/fbMessenger');
+var mongoose = require('mongoose');
+var config = require('./config');
 var game = require('./modules/game');
 var app = express();
+
+global.__base = __dirname + '/';
 
 app.set('port', (process.env.PORT || 8080));
 // Process application/x-www-form-urlencoded
@@ -13,6 +17,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('WebContent'));
 
+// Connect to database
+mongoose.connect(config.database.mlabs);
+
+/*Router Declarations*/
+var movies = require(__dirname + '/routes/movies')();
+var theatre = require(__dirname + '/routes/theatre')();
+var freshdesk = require(__dirname + '/routes/freshdesk')();
+
+/* Mapping the requests to routes (controllers) */
+app.use('/movies', movies);
+app.use('/theatre', theatre);
+app.use('/freshdesk', freshdesk);
+
 // Index route
 app.get('/', function(req, res) {
     res.sendFile(constants.HTML_DIR + 'index.html', { root: __dirname });
@@ -20,6 +37,7 @@ app.get('/', function(req, res) {
 
 app.get('/test', function(req, res) {
     console.log(game.getRandomGame());
+    res.sendStatus(200);
 });
 
 app.get('/privacy', function(req, res) {
@@ -73,6 +91,29 @@ app.post('/webhook/', function(req, res) {
         res.sendStatus(200);
     }
 })
+
+app.get('/testMovies', function(req, res) {
+    request(constants.LOCAL_URL + '/movies/getAllMovies', function(error, response, body) {
+        var movies = JSON.parse(response.body);
+        var elements = [];
+        movies.forEach((movie) => {
+            var element = {
+                title: movie.Title,
+                subtitle: movie.Plot,
+                item_url: constants.SERVER_URL,
+                image_url: movie.Poster,
+                buttons: [{
+                    type: "postback",
+                    title: "Select Movie",
+                    payload: constants.SELECT_MOVIE_PAYLOAD + movie.Title,
+                }],
+            }
+            elements.push(element);
+        });
+        console.log(elements);
+        res.send(elements);
+    });
+});
 
 // Spin up the server
 app.listen(app.get('port'), function() {

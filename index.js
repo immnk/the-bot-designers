@@ -3,6 +3,11 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var constants = require('./modules/constants');
 var fbMessenger = require('./modules/fbMessenger');
+var mongoose = require('mongoose');
+var config = require('./config');
+
+global.__base = __dirname + '/';
+
 var app = express();
 
 app.set('port', (process.env.PORT || 8080));
@@ -12,6 +17,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('WebContent'));
 
+// Connect to database
+mongoose.connect(config.database.mlabs);
+
+/*Router Declarations*/
+var movies = require(__dirname + '/routes/movies')();
+var theatre = require(__dirname + '/routes/theatre')();
+var freshdesk = require(__dirname + '/routes/freshdesk')();
+
+/* Mapping the requests to routes (controllers) */
+app.use('/movies', movies);
+app.use('/theatre', theatre);
+app.use('/freshdesk', freshdesk);
+
 // Index route
 app.get('/', function(req, res) {
     res.sendFile(constants.HTML_DIR + 'index.html', { root: __dirname });
@@ -20,7 +38,6 @@ app.get('/', function(req, res) {
 app.get('/privacy', function(req, res) {
     res.sendFile(constants.HTML_DIR + 'privacy-policy.html', { root: __dirname });
 });
-
 
 app.get('/webhook/', function(req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {

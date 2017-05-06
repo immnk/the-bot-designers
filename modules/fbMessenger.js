@@ -102,7 +102,9 @@ module.exports = {
             return;
         }
 
-        if (messageText) {
+        if (messageText.toUpperCase().indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
+            sendMovies(senderID);
+        } else if (messageText) {
 
             // If we receive a text message, check to see if it matches any special
             // keywords and send back the corresponding example. Otherwise, just echo
@@ -117,7 +119,6 @@ module.exports = {
                 case 'image':
                     sendImageMessage(senderID);
                     break;
-
                 case 'gif':
                     sendGifMessage(senderID);
                     break;
@@ -297,6 +298,27 @@ function sendPlayMessage(senderID) {
     sendQuickReply(senderID, quickReply, title);
 }
 
+function sendMovies(senderID) {
+    request(constants.LOCAL_URL + '/movies/getAllMovies', function(error, response, body) {
+        var movies = JSON.parse(response.body);
+        var elements = [];
+        movies.forEach((movie) => {
+            var element = {
+                title: movie.Title,
+                subtitle: movie.Plot,
+                item_url: constants.SERVER_URL,
+                image_url: movie.Poster,
+                buttons: [{
+                    type: "postback",
+                    title: "Select Movie",
+                    payload: constants.SELECT_MOVIE_PAYLOAD + movie.Title,
+                }],
+            }
+            elements.push(element);
+        });
+        sendGenericMessage(elements);
+    });
+}
 /*
  * Send an image using the Send API.
  *
@@ -465,7 +487,39 @@ function sendButtonMessage(recipientId) {
  * Send a Structured Message (Generic Message type) using the Send API.
  *
  */
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, elements) {
+    if (!elements) {
+        elements = [{
+            title: "rift",
+            subtitle: "Next-generation virtual reality",
+            item_url: "https://www.oculus.com/en-us/rift/",
+            image_url: constants.SERVER_URL + "/assets/rift.png",
+            buttons: [{
+                type: "web_url",
+                url: "https://www.oculus.com/en-us/rift/",
+                title: "Open Web URL"
+            }, {
+                type: "postback",
+                title: "Call Postback",
+                payload: "Payload for first bubble",
+            }],
+        }, {
+            title: "touch",
+            subtitle: "Your Hands, Now in VR",
+            item_url: "https://www.oculus.com/en-us/touch/",
+            image_url: constants.SERVER_URL + "/assets/touch.png",
+            buttons: [{
+                type: "web_url",
+                url: "https://www.oculus.com/en-us/touch/",
+                title: "Open Web URL"
+            }, {
+                type: "postback",
+                title: "Call Postback",
+                payload: "Payload for second bubble",
+            }]
+        }];
+    }
+
     var messageData = {
         recipient: {
             id: recipientId
@@ -475,35 +529,7 @@ function sendGenericMessage(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "generic",
-                    elements: [{
-                        title: "rift",
-                        subtitle: "Next-generation virtual reality",
-                        item_url: "https://www.oculus.com/en-us/rift/",
-                        image_url: constants.SERVER_URL + "/assets/rift.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/rift/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for first bubble",
-                        }],
-                    }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
-                        item_url: "https://www.oculus.com/en-us/touch/",
-                        image_url: constants.SERVER_URL + "/assets/touch.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/touch/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for second bubble",
-                        }]
-                    }]
+                    elements: elements
                 }
             }
         }
