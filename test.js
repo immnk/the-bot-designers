@@ -93,31 +93,31 @@ app.post('/webhook/', function(req, res) {
 })
 
 app.get('/testMovies', function(req, res) {
-    var url = constants.SERVER_URL + '/movies/getShowsByMovieTheatre';
-    var params = { title: 'Kavan', theatre_id: 'ID590cd9c873ce64ad8a685cbe' }
-    request({ url: url, qs: params }, function(error, response, body) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        // sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
-        var showTimings = JSON.parse(response.body);
-        console.log(showTimings);
-        var allButtons = [];
-        console.log('\n');
-        showTimings.forEach((show) => {
-            console.log(show);
-            console.log('\n');
-            var showButton = {
-                type: "postback",
-                title: show.name,
-                payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
-            }
-            allButtons.push(showButton);
-        });
-        console.log(allButtons);
-        res.send(allButtons);
-    });
+    // var url = constants.SERVER_URL + '/movies/getShowsByMovieTheatre';
+    // var params = { title: 'Kavan', theatre_id: 'ID590cd9c873ce64ad8a685cbe' }
+    // request({ url: url, qs: params }, function(error, response, body) {
+    //     if (error) {
+    //         console.error(error);
+    //         return;
+    //     }
+    //     // sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
+    //     var showTimings = JSON.parse(response.body);
+    //     console.log(showTimings);
+    //     var allButtons = [];
+    //     console.log('\n');
+    //     showTimings.forEach((show) => {
+    //         console.log(show);
+    //         console.log('\n');
+    //         var showButton = {
+    //             type: "postback",
+    //             title: show.name,
+    //             payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
+    //         }
+    //         allButtons.push(showButton);
+    //     });
+    //     console.log(allButtons);
+    //     res.send(allButtons);
+    // });
 });
 
 // Spin up the server
