@@ -93,25 +93,30 @@ app.post('/webhook/', function(req, res) {
 })
 
 app.get('/testMovies', function(req, res) {
-    request(constants.LOCAL_URL + '/movies/getAllMovies', function(error, response, body) {
-        var movies = JSON.parse(response.body);
+    var url = constants.SERVER_URL + '/movies/getMoviesLocationsByTitle';
+    var params = { title: 'Kavan' }
+    request({ url: url, qs: params }, function(error, response, body) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        var theatresByLocations = JSON.parse(response.body);
         var elements = [];
-        movies.forEach((movie) => {
-            var element = {
-                title: movie.Title,
-                subtitle: movie.Plot,
-                item_url: constants.SERVER_URL,
-                image_url: movie.Poster,
-                buttons: [{
-                    type: "postback",
-                    title: "Select Movie",
-                    payload: constants.SELECT_MOVIE_PAYLOAD + movie.Title,
-                }],
+        for (var location in theatresByLocations) {
+            if (theatresByLocations.hasOwnProperty(location)) {
+                // console.log(location + " -> " + theatresByLocations[location]);
+                if (location != 'title') {
+                    var theatres = theatresByLocations[location];
+                    console.log(location);
+                    console.log('\n');
+                    console.log('\n');
+                    theatres.forEach((theatre) => {
+                        console.log(theatre.name);
+                        console.log(theatre._id);
+                    });
+                }
             }
-            elements.push(element);
-        });
-        console.log(elements);
-        res.send(elements);
+        }
     });
 });
 

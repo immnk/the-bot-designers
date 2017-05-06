@@ -241,6 +241,8 @@ module.exports = {
 
         if (payload == 'GET_STARTED_PAYLOAD') {
             sendHelpMessage(senderID);
+        } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
+            sendTextMessage(senderID, payload);
         } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
             // Selected a movie. Now just fetch out locations.
             sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD));
@@ -346,7 +348,36 @@ function sendMovies(senderID) {
 }
 
 function sendLocations(senderID, movieName) {
-
+    var url = constants.SERVER_URL + '/movies/getMoviesLocationsByTitle';
+    var params = { title: movieName }
+    request({ url: url, qs: params }, function(error, response, body) {
+        if (error) {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
+            return;
+        }
+        var theatresByLocations = JSON.parse(response.body);
+        var movieTitle = theatresByLocations.title;
+        for (var location in theatresByLocations) {
+            if (theatresByLocations.hasOwnProperty(location)) {
+                // console.log(location + " -> " + theatresByLocations[location]);
+                if (location != 'title') {
+                    var theatres = theatresByLocations[location];
+                    var allButtons = [];
+                    console.log(location);
+                    console.log('\n');
+                    console.log('\n');
+                    theatres.forEach((theatre) => {
+                        var theatreButton = {
+                            type: "postback",
+                            title: theatre.name,
+                            payload: constants.SELECT_THEATRE_PAYLOAD + theatre._id + constants.SELECT_MOVIE_PAYLOAD + movieTitle
+                        }
+                    });
+                    sendButtonMessage(senderID, location, allButtons);
+                }
+            }
+        }
+    });
 }
 
 /*
@@ -481,7 +512,23 @@ function sendTextMessage(recipientId, messageText) {
  * Send a button message using the Send API.
  *
  */
-function sendButtonMessage(recipientId) {
+function sendButtonMessage(recipientId, title, buttons) {
+    if (!buttons) {
+        buttons = [{
+            type: "web_url",
+            url: "https://www.oculus.com/en-us/rift/",
+            title: "Open Web URL"
+        }, {
+            type: "postback",
+            title: "Trigger Postback",
+            payload: "DEVELOPER_DEFINED_PAYLOAD"
+        }, {
+            type: "phone_number",
+            title: "Call Phone Number",
+            payload: "+16505551234"
+        }];
+        title = "This is test text";
+    }
     var messageData = {
         recipient: {
             id: recipientId
@@ -491,20 +538,8 @@ function sendButtonMessage(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "button",
-                    text: "This is test text",
-                    buttons: [{
-                        type: "web_url",
-                        url: "https://www.oculus.com/en-us/rift/",
-                        title: "Open Web URL"
-                    }, {
-                        type: "postback",
-                        title: "Trigger Postback",
-                        payload: "DEVELOPER_DEFINED_PAYLOAD"
-                    }, {
-                        type: "phone_number",
-                        title: "Call Phone Number",
-                        payload: "+16505551234"
-                    }]
+                    text: title,
+                    buttons: buttons
                 }
             }
         }
