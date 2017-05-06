@@ -311,7 +311,7 @@ function sendMovies(senderID) {
                 title: movie.Title,
                 subtitle: movie.Plot,
                 item_url: constants.SERVER_URL,
-                image_url: movie.Poster,
+                image_url: constants.SERVER_URL + "/assets/rift.png",
                 buttons: [{
                     type: "postback",
                     title: "Select Movie",
