@@ -75,10 +75,10 @@ module.exports = {
             var quickReplyPayload = quickReply.payload;
             if (quickReplyPayload.indexOf("GAME_RIGHT") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.RIGHT_ANSWER);
-                sendPlayMessage(senderID);
+                setTimeout(sendPlayMessage(senderID), 500);
             } else if (quickReplyPayload.indexOf("GAME_WRONG") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.WRONG_ANSWER);
-                sendPlayMessage(senderID);
+                setTimeout(sendPlayMessage(senderID), 500);
             } else if (quickReplyPayload.indexOf("MAIN_SERVICE_") != -1) {
                 switch (quickReplyPayload) {
                     case constants.RECOMMEND_PAYLOAD:
@@ -299,7 +299,11 @@ function sendPlayMessage(senderID) {
 }
 
 function sendMovies(senderID) {
-    request(constants.LOCAL_URL + '/movies/getAllMovies', function(error, response, body) {
+    request(constants.SERVER_URL + '/movies/getAllMovies', function(error, response, body) {
+        if (error) {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
+            return;
+        }
         var movies = JSON.parse(response.body);
         var elements = [];
         movies.forEach((movie) => {

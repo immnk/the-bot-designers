@@ -17,6 +17,7 @@ module.exports = {
         "MOVIES_NEAR_ME": "MOVIES NEAR ME"
     },
     "KANNA_MESSAGES": {
+        "ERROR": "Kanna, an error ran into me because I don't",
         "CANT_UNDERSTAND": "Kanna, I cannot understand you.",
         "WRONG_ANSWER": "Kanna, try again.",
         "RIGHT_ANSWER": "Right answer"
