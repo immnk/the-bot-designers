@@ -43,6 +43,15 @@ app.get('/booking', function(req, res) {
     res.sendFile(constants.HTML_DIR + 'booking.html', { root: __dirname });
 });
 
+app.get('/movie', function(req, res) {
+    var title = req.query.title;
+    res.sendFile(constants.HTML_DIR + 'movie.html?title=' + title, { root: __dirname });
+});
+
+app.get('/getCab', function(req, res) {
+    var senderID = req.query.sender;
+    fbMessenger.sendCabBookButton(senderID);
+});
 app.get('/webhook/', function(req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
         res.send(req.query['hub.challenge']);

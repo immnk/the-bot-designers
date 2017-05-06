@@ -3,6 +3,22 @@ var request = require('request');
 var game = require('./game');
 
 module.exports = {
+
+    sendCabBookButton: function(senderID) {
+        var quickReply = [{
+                "content_type": "text",
+                "title": "Yes",
+                "payload": constants.BOOK_CAB_PAYLOAD
+            },
+            {
+                "content_type": "text",
+                "title": "No",
+                "payload": "IGNORE"
+            }
+        ];
+        var text = "Do you want to book a cab?";
+        sendQuickReply(senderID, quickReply, text);
+    },
     /*
      * Authorization Event
      *
@@ -97,6 +113,13 @@ module.exports = {
                     default:
                         sendTextMessage(senderID, constants.KANNA_MESSAGES.CANT_UNDERSTAND);
                 }
+            } else if (quickReplyPayload.indexOf(constants.BOOK_CAB_PAYLOAD) != -1) {
+                //code to book a cab service
+                sendTypingOn(senderID);
+                setTimeout(() => {
+                    sendTypingOff(senderID);
+                    sendTextMessage(senderID, "Your cab has been booked.");
+                }, 3000);
             } else {
                 console.log("Quick reply for message %s with payload %s",
                     messageId, quickReplyPayload);
@@ -347,7 +370,7 @@ function sendMovies(senderID) {
             var element = {
                 title: movie.Title,
                 subtitle: movie.Plot,
-                item_url: constants.SERVER_URL + "/movie?movie=" + movie.Title,
+                item_url: constants.SERVER_URL + "/movie?title=" + movie.Title,
                 image_url: movie.Poster,
                 buttons: [{
                     type: "postback",

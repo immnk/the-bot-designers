@@ -19,6 +19,7 @@ module.exports = {
     "SELECT_THEATRE_PAYLOAD": "THEATRE$",
     "SELECT_SHOW_PAYLOAD": "SHOW#",
     "TOUR_PAYLOAD": "TOUR",
+    "BOOK_CAB_PAYLOAD": "BOOK_CAB",
     "COMMANDS": {
         "HELP_COMMAND": "HELP",
         "PLAY_COMMAND": "PLAY",
