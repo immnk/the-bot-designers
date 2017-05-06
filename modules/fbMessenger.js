@@ -245,9 +245,10 @@ module.exports = {
             // sendTextMessage(senderID, payload);
             console.log(payload);
             var showID = payload.substring(payload.indexOf("#") + 1, payload.indexOf('$'));
-            var theatreID = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
+            var timing = payload.substring(payload.indexOf('$') + 1, payload.indexOf('@'));
             var movieName = payload.substring(payload.indexOf('_') + 1);
-            sendTextMessage(senderID, "Shall I go ahead and book the ticket for show @ " + showID + " at theatre " + theatreID + " for movie " + movieName);
+            // sendTextMessage(senderID, "Shall I go ahead and book the ticket for show @ " + showID + " at theatre " + theatreID + " for movie " + movieName);
+            sendBookingConfirmation(senderID, showID, timing, movieName);
         } else if (payload.indexOf(constants.SELECT_THEATRE_PAYLOAD) != -1) {
             var theatreID = payload.substring(payload.indexOf("$") + 1, payload.indexOf("#"));
             var movieName = payload.substring(payload.indexOf('_') + 1);
@@ -257,6 +258,8 @@ module.exports = {
         } else if (payload.indexOf(constants.SELECT_MOVIE_PAYLOAD) != -1) {
             // Selected a movie. Now just fetch out locations.
             sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD, ""));
+        } else if (payload.indexOf(constants.TOUR_PAYLOAD) != -1) {
+            sendHelpMessage(senderID)
         } else {
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
@@ -410,7 +413,7 @@ function sendShowTimings(senderID, theatreID, movieName) {
             var showButton = {
                 type: "postback",
                 title: show.timing,
-                payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
+                payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.timing + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
             }
             allButtons.push(showButton);
         });
@@ -421,6 +424,45 @@ function sendShowTimings(senderID, theatreID, movieName) {
             sendTextMessage(senderID, "Couldnt fetch all shows available");
         }
 
+    });
+}
+
+function sendBookingConfirmation(senderID, showID, timing, movieName) {
+    console.log("Send booking confirmaion method");
+    var url = constants.SERVER_URL + '/movies/bookTicket';
+    var postData = {
+        json: {
+            user_id: senderID,
+            shows_id: showID,
+            seats: ['h1', 'h2'],
+            time: timing
+        }
+    }
+    request.post(url, postData, function(error, response, body) {
+        if (error || response.statusCode != 200) {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
+            return;
+        }
+
+        if (response.statusCode == 200) {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.SHOW_BOOKED);
+            var buttons = [{
+                type: "web_url",
+                url: constants.SERVER_URL + "/booking",
+                title: "Show ticket"
+            }, {
+                type: "postback",
+                title: "Tour",
+                payload: constants.TOUR_PAYLOAD
+            }, {
+                type: "phone_number",
+                title: "Call Support",
+                payload: "+16144957219"
+            }];
+            var title = "Kanna, these options might help you.";
+            sendButtonMessage(senderID, title, buttons);
+        } else
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
     });
 }
 

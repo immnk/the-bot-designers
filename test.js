@@ -93,31 +93,25 @@ app.post('/webhook/', function(req, res) {
 })
 
 app.get('/testMovies', function(req, res) {
-    var url = constants.SERVER_URL + '/movies/getShowsByMovieTheatre';
-    var params = { title: 'Kavan', theatre_id: '590cd9c873ce64ad8a685cbe' }
-    request({ url: url, qs: params }, function(error, response, body) {
-        if (error) {
+    var url = constants.LOCAL_URL + '/movies/bookTicket';
+    var postData = {
+        json: {
+            user_id: '1280065458700271',
+            shows_id: '590d2f39f36d2804514b76ad',
+            seats: ['h1', 'h2'],
+            time: '3 pm to 7 pm'
+        }
+    }
+    request.post(url, postData, function(error, response, body) {
+        if (error || response.statusCode != 200) {
+            // sendTextMessage(senderID, constants.KANNA_MESSAGES.ERROR);
             console.error(error);
+            console.log(response);
             return;
         }
-        // sendTextMessage(senderID, "Showing theatres by locations for movie: " + movieName);
-        console.log(response.body);
-        var showTimings = JSON.parse(response.body);
-        console.log(showTimings);
-        var allButtons = [];
-        console.log('\n');
-        showTimings.forEach((show) => {
-            console.log(show);
-            console.log('\n');
-            var showButton = {
-                type: "postback",
-                title: show.timing,
-                payload: constants.SELECT_SHOW_PAYLOAD + show._id + "&" + constants.SELECT_THEATRE_PAYLOAD + show.theatre_id + "@" + constants.SELECT_MOVIE_PAYLOAD + show.movie_name
-            }
-            allButtons.push(showButton);
-        });
-        console.log(allButtons);
-        res.send(allButtons);
+
+        if (response.statusCode == 200)
+            res.sendStatus(200);
     });
 });
 

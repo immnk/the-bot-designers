@@ -5,6 +5,7 @@ module.exports = {
         "FD_API_KEY": "USyBH4BxWXMHNlsuvxh3",
         "FD_ENDPOINT": "meesun"
     },
+    "UBER": "https://login.uber.com/oauth/v2/authorize?client_id=NOAdsESZIE2CPWaL4Fg0d71uNVjFzcLU&response_type=code&scope=request",
     "WIT_AI_ENDPOINT": "https://api.wit.ai/message?v=20160829&q=",
     "WIT_AI_SERVER_TOKEN": "Bearer BFYEQAC2CHDMSNJY6WI7G7OOA5BLPMD4",
     "SERVER_URL": "https://thebotdesigners.herokuapp.com",
@@ -17,6 +18,7 @@ module.exports = {
     "SELECT_MOVIE_PAYLOAD": "SELECT_",
     "SELECT_THEATRE_PAYLOAD": "THEATRE$",
     "SELECT_SHOW_PAYLOAD": "SHOW#",
+    "TOUR_PAYLOAD": "TOUR",
     "COMMANDS": {
         "HELP_COMMAND": "HELP",
         "PLAY_COMMAND": "PLAY",
@@ -27,6 +29,7 @@ module.exports = {
         "ERROR": "Kanna, an error ran into me because I don't",
         "CANT_UNDERSTAND": "Kanna, I cannot understand you.",
         "WRONG_ANSWER": "Kanna, try again.",
-        "RIGHT_ANSWER": "Right answer"
+        "RIGHT_ANSWER": "Right answer",
+        "SHOW_BOOKED": "Kanna, your show is booked."
     }
 };

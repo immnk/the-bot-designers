@@ -39,6 +39,10 @@ app.get('/privacy', function(req, res) {
     res.sendFile(constants.HTML_DIR + 'privacy-policy.html', { root: __dirname });
 });
 
+app.get('/booking', function(req, res) {
+    res.sendFile(constants.HTML_DIR + 'booking.html', { root: __dirname });
+});
+
 app.get('/webhook/', function(req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
         res.send(req.query['hub.challenge']);
