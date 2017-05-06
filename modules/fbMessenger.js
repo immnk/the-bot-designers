@@ -75,10 +75,14 @@ module.exports = {
             var quickReplyPayload = quickReply.payload;
             if (quickReplyPayload.indexOf("GAME_RIGHT") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.RIGHT_ANSWER);
-                sendPlayMessage(senderID);
+                setTimeout(function() {
+                    sendPlayMessage(senderID);
+                }, 500);
             } else if (quickReplyPayload.indexOf("GAME_WRONG") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.WRONG_ANSWER);
-                sendPlayMessage(senderID);
+                setTimeout(function() {
+                    sendPlayMessage(senderID);
+                }, 500);
             } else if (quickReplyPayload.indexOf("MAIN_SERVICE_") != -1) {
                 switch (quickReplyPayload) {
                     case constants.RECOMMEND_PAYLOAD:
@@ -311,7 +315,7 @@ function sendMovies(senderID) {
                 title: movie.Title,
                 subtitle: movie.Plot,
                 item_url: constants.SERVER_URL,
-                image_url: constants.SERVER_URL + "/assets/rift.png",
+                image_url: movie.Poster,
                 buttons: [{
                     type: "postback",
                     title: "Select Movie",
