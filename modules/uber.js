@@ -18,7 +18,7 @@ module.exports = {
             })
             .end(function(response) {
                 getFareEstimate(req, response);
-                res.sendStatus(200);
+                res.send("Your uber is on its way. Check it in Uber App");
             });
     }
 }
