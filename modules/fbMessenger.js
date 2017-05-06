@@ -335,7 +335,7 @@ function sendMovies(senderID) {
                 image_url: movie.Poster,
                 buttons: [{
                     type: "postback",
-                    title: "Select Movie",
+                    title: "Select " + movie.Title,
                     payload: constants.SELECT_MOVIE_PAYLOAD + movie.Title,
                 }],
             }
