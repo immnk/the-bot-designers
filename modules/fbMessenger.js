@@ -75,10 +75,10 @@ module.exports = {
             var quickReplyPayload = quickReply.payload;
             if (quickReplyPayload.indexOf("GAME_RIGHT") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.RIGHT_ANSWER);
-                setTimeout(sendPlayMessage(senderID), 500);
+                sendPlayMessage(senderID);
             } else if (quickReplyPayload.indexOf("GAME_WRONG") != -1) {
                 sendTextMessage(senderID, constants.KANNA_MESSAGES.WRONG_ANSWER);
-                setTimeout(sendPlayMessage(senderID), 500);
+                sendPlayMessage(senderID);
             } else if (quickReplyPayload.indexOf("MAIN_SERVICE_") != -1) {
                 switch (quickReplyPayload) {
                     case constants.RECOMMEND_PAYLOAD:
