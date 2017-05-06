@@ -111,7 +111,12 @@ module.exports = {
             sendMovies(senderID);
         } else if (messageText.indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1) {
             // Create FD ticket
-            var params = { email: 'sapnasat@gmail.com', subject: 'test subject', description: 'test description' };
+            var params = {
+                userId: senderID,
+                emailId: 'sapnasat@gmail.com',
+                subject: 'test subject',
+                description: 'test description'
+            }
             request({ url: constants.SERVER_URL + "/freshdesk/createTicket", qs: params }, function(err, response, body) {
                 if (err) { console.log(err); return; }
                 // console.log("Get response: " + response.statusCode);
