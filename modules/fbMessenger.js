@@ -5,17 +5,25 @@ var game = require('./game');
 module.exports = {
 
     sendCabBookButton: function(senderID) {
-        var quickReply = [{
-            "content_type": "text",
-            "title": "Yes",
-            "payload": constants.BOOK_CAB_PAYLOAD
-        }, {
-            "content_type": "text",
-            "title": "No",
-            "payload": "IGNORE"
+        // var quickReply = [{
+        //     "content_type": "text",
+        //     "title": "Yes",
+        //     "payload": constants.BOOK_CAB_PAYLOAD
+        // }, {
+        //     "content_type": "text",
+        //     "title": "No",
+        //     "payload": "IGNORE"
+        // }];
+
+        var buttons = [{
+            "type": "web_url",
+            "url": constants.UBER,
+            "title": "Book Cab",
+            "webview_height_ratio": "compact"
         }];
         var text = "Do you want to book a cab?";
-        sendQuickReply(senderID, quickReply, text);
+        // sendButtonMessage(senderID, quickReply, text);
+        sendButtonMessage(senderID, text, buttons);
     },
     sendReviewButtons: function(senderID) {
         var buttons = [{
@@ -139,8 +147,10 @@ module.exports = {
                 // }, 3000);
 
                 request({ url: constants.SERVER_URL + '/uber/bookUber' }, function(err, response, body) {
-                    if (err) { console.error(err);
-                        return }
+                    if (err) {
+                        console.error(err);
+                        return
+                    }
                     sendTextMessage(senderID, "Your cab has been booked.");
                 });
             } else {
@@ -164,7 +174,7 @@ module.exports = {
         } else if (messageText.toLowerCase().indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.HUNGRY_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.POPCORN_COMMAND) != -1 ||
-            messageText.toLowerCase().indexOf(constants.COMMANDS.PROBLEM_COMMAND) != -1 || 
+            messageText.toLowerCase().indexOf(constants.COMMANDS.PROBLEM_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.MAHADAD_COMMAND) != -1) {
 
             // Create FD ticket
@@ -175,8 +185,10 @@ module.exports = {
                 description: messageText
             }
             request({ url: constants.SERVER_URL + "/freshdesk/createTicket", qs: params }, function(err, response, body) {
-                if (err) { console.log(err);
-                    return; }
+                if (err) {
+                    console.log(err);
+                    return;
+                }
                 // console.log("Get response: " + response.statusCode);
                 var message = body ? body : "Ticket created for your request.";
                 sendTextMessage(senderID, message);
