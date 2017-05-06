@@ -138,7 +138,7 @@ module.exports = {
                 //     sendTextMessage(senderID, "Your cab has been booked.");
                 // }, 3000);
 
-                request({ url: constant.SERVER_URL + '/uber/bookUber' }, function(err, response, body) {
+                request({ url: constants.SERVER_URL + '/uber/bookUber' }, function(err, response, body) {
                     if (err) { console.error(err);
                         return }
                     sendTextMessage(senderID, "Your cab has been booked.");
