@@ -19,6 +19,29 @@ module.exports = {
         var text = "Do you want to book a cab?";
         sendQuickReply(senderID, quickReply, text);
     },
+    sendReviewButtons: function(senderID) {
+        var buttons = [{
+            type: "postback",
+            title: "Excellent",
+            payload: constants.REVIEW.EXCELLENT_PAYLOAD
+        }, {
+            type: "postback",
+            title: "Good",
+            payload: constants.REVIEW.GOOD_PAYLOAD
+        }, {
+            type: "postback",
+            title: "Average",
+            payload: constants.REVIEW.AVERAGE_PAYLOAD
+        }, {
+            type: "postback",
+            title: "Poor",
+            payload: constants.REVIEW.POOR_PAYLOAD
+        }];
+        var title = "Please give your rating for the movie!";
+
+        sendButtonMessage(senderID, title, buttons);
+
+    },
     /*
      * Authorization Event
      *
@@ -283,6 +306,13 @@ module.exports = {
             sendLocations(senderID, payload.replace(constants.SELECT_MOVIE_PAYLOAD, ""));
         } else if (payload.indexOf(constants.TOUR_PAYLOAD) != -1) {
             sendHelpMessage(senderID)
+        } else if (payload.indexOf("REVIEW_") != -1) {
+            // Say thanks for the review
+            sendTypingOn(senderID);
+            setTimeout(() => {
+                sendTypingOff(senderID);
+                sendTextMessage(senderID, "Thanks for giving your feedback.");
+            }, 3000);
         } else {
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful

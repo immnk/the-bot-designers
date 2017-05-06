@@ -52,6 +52,12 @@ app.get('/getCab', function(req, res) {
     var senderID = req.query.sender;
     fbMessenger.sendCabBookButton(senderID);
 });
+
+app.get('/askReview', function(req, res) {
+    var senderID = req.query.sender;
+    fbMessenger.sendReviewButtons(senderID);
+});
+
 app.get('/webhook/', function(req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
         res.send(req.query['hub.challenge']);

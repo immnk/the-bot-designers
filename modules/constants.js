@@ -32,5 +32,11 @@ module.exports = {
         "WRONG_ANSWER": "Kanna, try again.",
         "RIGHT_ANSWER": "Right answer",
         "SHOW_BOOKED": "Kanna, your show is booked."
+    },
+    "REVIEW": {
+        "EXCELLENT_PAYLOAD": "REVIEW_EXCELLENT",
+        "GOOD_PAYLOAD": "REVIEW_GOOD",
+        "AVERAGE_PAYLOAD": "REVIEW_AVERAGE",
+        "POOR_PAYLOAD": "REVIEW_POOR"
     }
 };
