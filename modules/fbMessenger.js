@@ -148,10 +148,19 @@ module.exports = {
             return;
         }
 
-        messageText = messageText.toUpperCase();
+        if (typeof(messageText) == string) {
+            messageText = messageText.toUpperCase();
+        } else {
+            sendTextMessage(senderID, constants.KANNA_MESSAGES.UNKNOWN);
+            return;
+        }
+
         if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
             sendMovies(senderID);
-        } else if (messageText.indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1) {
+        } else if (messageText.toLowerCase().indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1 ||
+            messageText.toLowerCase().indexOf(constants.COMMANDS.HUNGRY_COMMAND) != -1 ||
+            messageText.toLowerCase().indexOf(constants.COMMANDS.POPCORN_COMMAND) != -1 ||
+            messageText.toLowerCase().indexOf(constants.COMMANDS.PROBLEM_COMMAND) != -1) {
             // Create FD ticket
             var params = {
                 userId: senderID,
@@ -228,7 +237,7 @@ module.exports = {
                     break;
 
                 default:
-                    sendTextMessage(senderID, messageText);
+                    sendTextMessage(senderID, constants.KANNA_MESSAGES.UNKNOWN);
             }
         } else if (messageAttachments) {
             sendTextMessage(senderID, "Message with attachment received");

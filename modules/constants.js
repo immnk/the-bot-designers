@@ -26,14 +26,18 @@ module.exports = {
         "HELP_COMMAND": "HELP",
         "PLAY_COMMAND": "PLAY",
         "MOVIES_NEAR_ME": "MOVIES NEAR ME",
-        "ISSUE_COMMAND": "ISSUE"
+        "ISSUE_COMMAND": "issue",
+        "HUNGRY_COMMAND": "hungry",
+        "POPCORN_COMMAND": "popcorn",
+        "PROBLEM_COMMAND": "problem"
     },
     "KANNA_MESSAGES": {
         "ERROR": "Kanna, an error ran into me because I don't",
         "CANT_UNDERSTAND": "Kanna, I cannot understand you.",
         "WRONG_ANSWER": "Kanna, you got it wrong da.",
         "RIGHT_ANSWER": "Right answer",
-        "SHOW_BOOKED": "Kanna, your show is booked."
+        "SHOW_BOOKED": "Kanna, your show is booked.",
+        "UNKNOWN": "Kanna, I am still learning."
     },
     "REVIEW": {
         "EXCELLENT_PAYLOAD": "REVIEW_EXCELLENT",
