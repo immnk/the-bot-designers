@@ -427,10 +427,11 @@ function sendMovies(senderID) {
         var movies = JSON.parse(response.body);
         var elements = [];
         movies.forEach((movie) => {
+            console.log('Movie URL: ' + encodeURIComponent(constants.SERVER_URL + "/movie?title=" + movie.Title));
             var element = {
                 title: movie.Title,
                 subtitle: movie.Plot,
-                item_url: constants.SERVER_URL + "/movie?title=" + movie.Title,
+                item_url: encodeURIComponent(constants.SERVER_URL + "/movie?title=" + movie.Title),
                 image_url: movie.Poster,
                 buttons: [{
                     type: "postback",
