@@ -128,6 +128,7 @@ module.exports = {
                 switch (quickReplyPayload) {
                     case constants.RECOMMEND_PAYLOAD:
                         sendTextMessage(senderID, "Fetching you the list of recommendations.");
+                        sendMovies(senderID);
                         break;
                     case constants.LOG_PAYLOAD:
                         sendTextMessage(senderID, "Please brief your concern for us to address it promptly.");
@@ -170,7 +171,11 @@ module.exports = {
         }
 
         if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
-            sendMovies(senderID);
+            sendTypingOn(senderID);
+            setTimeout(() => {
+                sendTypingOff(senderID);
+                sendMovies(senderID);
+            }, 1000);
         } else if (messageText.toLowerCase().indexOf(constants.COMMANDS.ISSUE_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.HUNGRY_COMMAND) != -1 ||
             messageText.toLowerCase().indexOf(constants.COMMANDS.POPCORN_COMMAND) != -1 ||
