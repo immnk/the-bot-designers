@@ -431,7 +431,7 @@ function sendMovies(senderID) {
             var element = {
                 title: movie.Title,
                 subtitle: movie.Plot,
-                item_url: encodeURIComponent(constants.SERVER_URL + "/movie?title=" + movie.Title),
+                item_url: constants.SERVER_URL + "/movie?title=" + movie.Title,
                 image_url: movie.Poster,
                 buttons: [{
                     type: "postback",
