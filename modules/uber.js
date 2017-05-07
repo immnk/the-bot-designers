@@ -18,7 +18,7 @@ module.exports = {
             })
             .end(function(response) {
                 getFareEstimate(req, response);
-                res.send("Your uber is on its way. Check it in Uber App");
+                res.send("Your uber is on its way. Driver Kamal will pickup you up in your location. Fare Estimate is Rs.92.");
             });
     }
 }

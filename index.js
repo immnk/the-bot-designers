@@ -30,6 +30,7 @@ var theatre = require(__dirname + '/routes/theatre')();
 var freshdesk = require(__dirname + '/routes/freshdesk')();
 var options = require(__dirname + '/routes/option')();
 var uber = require(__dirname + '/routes/uber')();
+var userFav = require(__dirname + '/routes/userFav')();
 
 /* Mapping the requests to routes (controllers) */
 app.use('/movies', movies);
@@ -37,6 +38,20 @@ app.use('/theatre', theatre);
 app.use('/freshdesk', freshdesk);
 app.use('/option', options);
 app.use('/uber', uber);
+app.use('/userFav',userFav);
+
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
+     // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+});
 
 // Index route
 app.get('/', function(req, res) {
