@@ -15,26 +15,26 @@ module.exports = function() {
         var Movies = require(__base + 'models/movies');
 
         /**var movies = Movies({
-			id: '100',
-  			name: '8 THOTTAKKAL',
-  			genre: 'Entertainment',
-		  	language: 'Tamil',
-		  	location: 'Velachery',
-		  	releaseDate: new Date(),
-		  	trailerLink: 'https://youtu.be/AH3X-cIa40k',
-		  	imgLink: 'https://img.spicinemas.in/resources/images/movies/8-thottakkal/150x207.jpg'
-		});*/
+            id: '100',
+            name: '8 THOTTAKKAL',
+            genre: 'Entertainment',
+            language: 'Tamil',
+            location: 'Velachery',
+            releaseDate: new Date(),
+            trailerLink: 'https://youtu.be/AH3X-cIa40k',
+            imgLink: 'https://img.spicinemas.in/resources/images/movies/8-thottakkal/150x207.jpg'
+        });*/
 
         /**var movies = Movies({
-			id: '101',
-  			name: 'A DOGS PURPOSE',
-  			genre: 'Entertainment',
-		  	language: 'English',
-		  	location: 'Villivakam',
-		  	releaseDate: new Date(),
-		  	trailerLink: 'https://youtu.be/1jLOOCADTGs',
-		  	imgLink: 'https://img.spicinemas.in/resources/images/movies/a-dogs-purpose/150x207.jpg'
-		});**/
+            id: '101',
+            name: 'A DOGS PURPOSE',
+            genre: 'Entertainment',
+            language: 'English',
+            location: 'Villivakam',
+            releaseDate: new Date(),
+            trailerLink: 'https://youtu.be/1jLOOCADTGs',
+            imgLink: 'https://img.spicinemas.in/resources/images/movies/a-dogs-purpose/150x207.jpg'
+        });**/
 
         var Theatreshowmovie = require(__base + 'models/theatreshowmovie');
         var theatreshowmovie = Theatreshowmovie({
@@ -112,8 +112,8 @@ module.exports = function() {
     router.get('/getMovieByTitle', function(req, res) {
         var Movies = require(__base + 'models/movies');
 
-        if(req.query.title && req.query.title.indexOf('+') != -1) {
-            req.query.title.replace('+', ' ');
+        if (req.query.title && req.query.title.indexOf('+') != -1) {
+            req.query.title = req.query.title.replace('+', ' ');
         }
 
         console.log("req.Title - " + req.query.title);
