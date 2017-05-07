@@ -170,7 +170,8 @@ module.exports = {
             return;
         }
 
-        if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1) {
+        if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1 || 
+            messageText.indexOf(constants.COMMANDS.MOVIE_COMMAND) != -1) {
             sendTypingOn(senderID);
             setTimeout(() => {
                 sendTypingOff(senderID);
