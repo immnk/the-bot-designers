@@ -210,6 +210,9 @@ module.exports = {
                 case constants.COMMANDS.PLAY_COMMAND:
                     sendPlayMessage(senderID);
                     break;
+                case "HI" || "HELLO" || "GOOD MORNING":
+                    sendTextMessage(senderID, "Hi :-)");
+                    break;
                 case 'IMAGE':
                     sendImageMessage(senderID);
                     break;

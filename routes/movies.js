@@ -112,6 +112,10 @@ module.exports = function() {
     router.get('/getMovieByTitle', function(req, res) {
         var Movies = require(__base + 'models/movies');
 
+        if(req.query.title && req.query.title.indexOf('+') != -1) {
+            req.query.title.replace('+', ' ');
+        }
+
         console.log("req.Title - " + req.query.title);
         // get all the movies
         var titleObj = { Title: req.query.title };
