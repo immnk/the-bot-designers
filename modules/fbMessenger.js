@@ -170,7 +170,7 @@ module.exports = {
             return;
         }
 
-        if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1 || 
+        if (messageText.indexOf(constants.COMMANDS.MOVIES_NEAR_ME) != -1 ||
             messageText.indexOf(constants.COMMANDS.MOVIE_COMMAND) != -1) {
             sendTypingOn(senderID);
             setTimeout(() => {
@@ -199,6 +199,8 @@ module.exports = {
                 var message = body ? body : "Ticket created for your request.";
                 sendTextMessage(senderID, message);
             });
+        } else if (messageText.toLowerCase().indexOf('name') != -1) {
+            sendTextMessage(senderID, "Baasha! Maaanik Baasha.");
         } else if (messageText) {
 
             // If we receive a text message, check to see if it matches any special
